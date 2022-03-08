@@ -1,0 +1,141 @@
+---
+title: "R Notebook to accompany Fink, Alexander, Janata (2022)"
+output: html_notebook
+author: Lauren Fink
+contact: lkfink@ucdavis.edu or lauren.fink@ae.mpg.de
+---
+
+This notebook steps through the mixed modelling analyses reported in the Individual Differences section of the paper. To recreate, please set the file path to the data file appropriately.
+
+```{r, verbose=FALSE}
+# Load packages and data
+library(lme4)
+library(nlme)
+library(lmerTest)
+library(car)
+library(sjPlot)
+library(r2glmm)
+library(sjmisc)
+library(sjlabelled)
+library(effsize)
+library(ggplot2)
+library(nortest)
+library(dplyr)
+library(tidyverse)
+library(readxl)
+library(nortest)
+library(PerformanceAnalytics)
+library(MuMIn)
+library(caret)
+library(magick)
+library(PEIP)
+library(gplots)
+library(ggeffects)
+
+# Load our data file
+# USER TODO: Set path appropriately
+gd = read.csv(file = '/Users/lauren.fink/Documents/Projects/GEM/Data/four_all_wAllIndDiffs_long.csv', header=TRUE)
+
+# recode some variables 
+gd$exp = as.factor(gd$exp)
+gd$gender = as.factor(gd$gender)
+gd$sd_abs = abs(gd$sdDiff)
+```
+
+
+# Relationship between person-level variables and individual-group sd async
+This is Table 4 in the paper
+```{r}
+lr <- lmer(sdDiff ~  gen_soph + intern + powo + chance + play + seek + care + fear + anger + sadness + (1|alpha:subID:group:exp),  
+            data=gd,
+            na.action=na.exclude,
+            REML = TRUE)
+
+summary(lr)
+
+print(car::vif(lr))
+```
+
+
+Pretty table output for paper
+```{r}
+# check if overparameterized 
+print(rePCA(lr)) #not overparameterized
+
+
+# Do F test for model
+print(Anova(lr))
+
+# Output table with fixed and random effect results
+sjPlot::tab_model(lr, 
+                  show.re.var= TRUE) 
+```
+
+
+```{r}
+preds = ggpredict(lr, terms = "sadness")
+print(preds)
+p = plot(preds)
+p
+```
+
+
+
+# Relationship between sd and groove
+Table 5. Individual groove ratings as a function of SD asynchrony difference from group
+Fig. 7
+```{r}
+lr <- lmer(groove ~ sdDiff + (1|alpha:subID:group:exp), 
+            data=gd,
+            #family=binomial(link="identity"),
+            na.action=na.exclude,
+            REML = TRUE)
+
+summary(lr)
+
+```
+
+```{r}
+plot_model(lr, type = "eff", term = "sdDiff")
+```
+
+```{r}
+# check if overparameterized 
+print(rePCA(lr)) #not overparameterized
+
+
+# Do F test for model
+print(Anova(lr))
+
+# Output table with fixed and random effect results
+sjPlot::tab_model(lr, 
+                  show.re.var= TRUE) 
+```
+
+
+
+# Relationship between personal rank and sd async difference
+Table 6 & Figure 8
+
+```{r}
+gd$rank_factor = as.factor(gd$rank)
+lr <- lmer(sdDiff ~  rank_factor + (1|alpha:subID:group:exp), 
+            data=gd,
+            na.action=na.exclude,
+            REML = TRUE)
+
+summary(lr)
+```
+
+```{r}
+sjPlot::tab_model(lr, 
+                  show.re.var= TRUE) 
+
+preds = ggpredict(lr, terms = "rank_factor")
+print(preds)
+op = TRUE
+if (op){png("gem_sdDiff_rank.png", units="in", width=7, height=6, res=300)}
+p = plot(preds)
+p + theme_classic() + xlab("Rank") + ylab("Individual - Group SD async") + theme(
+      text = element_text(size=16, color="black"))
+```
