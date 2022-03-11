@@ -14,7 +14,7 @@ Contains the experiment manager files associated with experiments 1-5 of the pap
 - Exp. 4: **`GEM_expMngr_4person_hearSelf.py`**
 - Exp. 5: **`GEM_expMngr_4person_hearAll.py`**
 
-Note that the code to create the GEM and is in a separate repository: [https://github.com/janatalab/GEM](https://github.com/janatalab/GEM)
+Note that the code to create the GEM system is in a separate repository: [https://github.com/janatalab/GEM](https://github.com/janatalab/GEM). That code needs to be installed before these scripts can function. These files are provided here for completeness and as examples. If running GEM experiments yourself, experiment management scripts such as these should be placed in the GUI folder of the GEM repository. Please see the [GEM repository](https://github.com/janatalab/GEM) for more details.   
 
 
 ### Data
