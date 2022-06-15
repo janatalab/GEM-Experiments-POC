@@ -1,8 +1,9 @@
 # GEM-Experiments-POC
 Presentation and analysis code associated with initial GEM Proof-of-Concept experiments.
 
-If using anything from this repository, please cite:
-Fink, Alexander, Janata (2022). The Groove Enhancement Machine (GEM): A multi-person adaptive metronome to manipulate sensorimotor synchronization and subjective enjoyment.
+If using anything from this repository, please cite:  
+
+Fink, L.K., Alexander, P.C., & Janata, P. (2022). The Groove Enhancement Machine (GEM): A multi-person adaptive metronome to manipulate sensorimotor synchronization and subjective enjoyment. *Front. Hum. Neurosci. 16*:916551. [doi: 10.3389/fnhum.2022.916551](https://doi.org/10.3389/fnhum.2022.916551)
 
 ## Contents
 
