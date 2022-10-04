@@ -16,7 +16,7 @@ from GEMGUI import GEMGUI
 import os
 import serial.tools.list_ports
 
-def get_master_port():
+def get_metronome_port():
     ports = list(serial.tools.list_ports.comports())
     for p in ports:
         # Check for ID of usb adapter we use to connect Arduino
@@ -24,16 +24,16 @@ def get_master_port():
             pid = str(p)
             return pid.split(' ')[0]
 
-master_port = get_master_port()
+metronome_port = get_metronome_port()
 
 rootpath = "/Users/" + os.environ['USER'] + "/Documents/Arduino/"
 
 presets = {
-    "serial": {"port": master_port, "baud_rate": 115200, "timeout": 5},
+    "serial": {"port": metronome_port, "baud_rate": 115200, "timeout": 5},
     "filename": "GEM_1player_hearSelf",
     "data_dir": "/Users/" + os.environ['USER'] +        "/Desktop/GEM_data/1person_GEM_hearSelf/",
     "hfile": rootpath + "GEM/GEM/GEMConstants.h",
-    "slaves_requested": 1,
+    "tappers_requested": 1,
     "metronome_alpha": [0, 0.25, 0.5, 0.75, 1],
     "metronome_tempo": 120.0, #units: beats-per-minute
     "repeats": 10, #10, #number of rounds at each alpha; Fairhurst was 12
