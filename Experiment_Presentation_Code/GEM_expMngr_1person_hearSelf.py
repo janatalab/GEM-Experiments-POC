@@ -12,24 +12,16 @@ Contact: pjanata@ucdavis.edu
 Repository link: https://github.com/janatalab/GEM
 '''
 
-from GEMGUI import GEMGUI
 import os
-import serial.tools.list_ports
 
-def get_metronome_port():
-    ports = list(serial.tools.list_ports.comports())
-    for p in ports:
-        # Check for ID of usb adapter we use to connect Arduino
-        if "Generic CDC" in p[1]:
-            pid = str(p)
-            return pid.split(' ')[0]
-
-metronome_port = get_metronome_port()
+# Finish the GEM imports
+from GEMGUI import GEMGUI
+from GEMIO import get_metronome_port
 
 rootpath = "/Users/" + os.environ['USER'] + "/Documents/Arduino/"
 
 presets = {
-    "serial": {"port": metronome_port, "baud_rate": 115200, "timeout": 5},
+    "serial": {"port": get_metronome_port(), "baud_rate": 115200, "timeout": 5},
     "filename": "GEM_1player_hearSelf",
     "data_dir": "/Users/" + os.environ['USER'] +        "/Desktop/GEM_data/1person_GEM_hearSelf/",
     "hfile": rootpath + "GEM/GEM/GEMConstants.h",

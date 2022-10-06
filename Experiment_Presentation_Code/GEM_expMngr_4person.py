@@ -15,24 +15,27 @@ Contact: pjanata@ucdavis.edu
 Repository link: https://github.com/janatalab/GEM
 '''
 
+import os, sys, re
+
+# Deal with adding the requisite GEM GUI modules to the path
+if not os.environ.get('GEMROOT', None):
+    # Try to get the GEM path from this module's path.
+    p = re.compile('.*/GEM/')
+    m = p.match(os.path.join(os.path.abspath(os.path.curdir),__file__))
+
+    if m:
+        os.environ['GEMROOT'] = m.group(0)
+
+sys.path.append(os.path.join(os.environ['GEMROOT'],'GUI'))
+
+# Finish the GEM imports
 from GEMGUI import GEMGUI
-import os
-import serial.tools.list_ports
-
-def get_metronome_port():
-    ports = list(serial.tools.list_ports.comports())
-    for p in ports:
-        # Check for ID of usb adapter we use to connect Arduino
-        if "Generic CDC" in p[1]:
-            pid = str(p)
-            return pid.split(' ')[0]
-
-metronome_port = get_metronome_port()
+from GEMIO import get_metronome_port
 
 rootpath = "/Users/" + os.environ['USER'] + "/Documents/Arduino/"
 
 presets = {
-    "serial": {"port": metronome_port, "baud_rate": 115200, "timeout": 5},
+    "serial": {"port": get_metronome_port(), "baud_rate": 115200, "timeout": 5},
     "filename": "GEM_4playerData",
     "data_dir": "/Users/" + os.environ['USER'] +        "/Desktop/GEM_data/4person_GEM_pilotData/",
     "hfile": rootpath + "GEM/GEM/GEMConstants.h",

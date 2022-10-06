@@ -27,8 +27,8 @@ if not os.environ.get('GEMROOT', None):
 
 sys.path.append(os.path.join(os.environ['GEMROOT'],'GUI'))
 
+# Finish the GEM imports
 from GEMGUI import GEMGUI
-
 from GEMIO import get_metronome_port
 
 presets = {

@@ -6,7 +6,7 @@ Contact: pjanata@ucdavis.edu
 Repository link: https://github.com/janatalab/GEM
 '''
 
-import os
+import os, sys, re
 
 # Deal with adding the requisite GEM GUI modules to the path
 if not os.environ.get('GEMROOT', None):
