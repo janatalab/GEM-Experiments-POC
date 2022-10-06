@@ -32,14 +32,14 @@ rootpath = "/Users/" + os.environ['USER'] + "/Documents/Arduino/"
 
 presets = {
     "serial": {"port": metronome_port, "baud_rate": 115200, "timeout": 5},
-    "filename": "GEM_4playerData_hearSelf",
-    "data_dir": "/Users/" + os.environ['USER'] +        "/Desktop/GEM_data/4person_GEM_hearSelf/",
+    "filename": "GEM_4playerData_hearSelf_80bpm",
+    "data_dir": "/Users/" + os.environ['USER'] +        "/Desktop/GEM_data/4person_GEM_hearSelf_80bpm/",
     "hfile": rootpath + "GEM/GEM/GEMConstants.h",
     "tappers_requested": 4,
     "metronome_alpha": [0, 0.35, 0.7, 1],
-    "metronome_tempo": 120.0, #units: beats-per-minute
+    "metronome_tempo": 80.0, #units: beats-per-minute
     "repeats": 6,
-    "windows": 60, # ~30 sec rounds
+    "windows": 40, # ~30 sec rounds
     "audio_feedback": ["hear_metronome_and_self"],
     "metronome_heuristic": ["average"]
 }
